@@ -94,3 +94,25 @@ docker-compose exec backend python -m pytest
 - **Backend fails to start?** Check if ports 5432 (Postgres) or 6379 (Redis) are already in use.
 - **Frontend build errors?** Ensure you are in the `frontend` directory and have run `npm install`.
 - **"Not enough data" in Scanner?** Occasionally Yahoo Finance APIs rate limit or return empty data. Try again in a few seconds.
+
+## Configuration (Reddit API)
+
+To enable live Reddit data (instead of mock data), you need API credentials:
+
+1.  Log in to [Reddit](https://www.reddit.com/prefs/apps).
+2.  Click **"are you a developer? create an app..."** button (or "create another app...").
+3.  Fill in the form:
+    -   **name**: `InvestmentApp`
+    -   **type**: Select **`script`** (Important!)
+    -   **redirect uri**: `http://localhost:8080` (Value doesn't matter for scripts, but must be valid URL).
+4.  Click **create app**.
+5.  Copy the credentials:
+    -   **Client ID**: The string under the app name (e.g., `AbCdEf12345`).
+    -   **Client Secret**: The string next to "secret".
+6.  Update `docker-compose.yml` or create a `.env` file in `backend/`:
+    ```env
+    REDDIT_CLIENT_ID=your_id_here
+    REDDIT_CLIENT_SECRET=your_secret_here
+    REDDIT_USER_AGENT=InvestmentApp/1.0
+    ```
+7.  Restart the backend: `docker-compose restart backend`

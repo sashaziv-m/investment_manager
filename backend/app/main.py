@@ -61,6 +61,18 @@ async def run_scan(request: ScanRequest):
     results.sort(key=lambda x: x['momentum_score'], reverse=True)
     return results
 
+@api_router.get("/social/trends", tags=["social"])
+async def get_social_trends():
+    from app.services.reddit_service import RedditService
+    service = RedditService()
+    return await service.get_trends()
+
+@api_router.get("/social/insider-trades", tags=["social"])
+async def get_insider_trades():
+    from app.services.insider_service import InsiderTradeService
+    service = InsiderTradeService()
+    return await service.get_recent_trades()
+
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
 @app.get("/")

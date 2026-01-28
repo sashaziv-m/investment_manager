@@ -6,6 +6,8 @@ import VixCard from '@/app/components/VixCard';
 import PortfolioTable from '@/app/components/PortfolioTable';
 import AlertConfig from '@/app/components/AlertConfig';
 import MomentumTable from '@/app/components/MomentumTable';
+import RedditTrends from '@/app/components/RedditTrends';
+import InsiderTrades from '@/app/components/InsiderTrades';
 
 export default function Home() {
   // ...
@@ -62,10 +64,8 @@ export default function Home() {
         {/* Social Column */}
         <div className="space-y-6">
           <h2 className="text-xl font-semibold text-neutral-700 dark:text-neutral-200 border-b pb-2">Social</h2>
-          <div className="p-6 rounded-xl bg-white dark:bg-neutral-800 shadow-sm opacity-60">
-            <h3 className="text-sm font-medium mb-2">Reddit Trends</h3>
-            <p className="text-xs text-neutral-500">Coming soon...</p>
-          </div>
+          <RedditTrends />
+          <InsiderTrades />
         </div>
       </div>
     </main>

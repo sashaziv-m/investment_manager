@@ -82,3 +82,42 @@ export async function runScan(): Promise<ScanResult[]> {
         return [];
     }
 }
+
+export type RedditTrend = {
+    symbol: string;
+    mentions: number;
+    sentiment: number;
+};
+
+export async function fetchRedditTrends(): Promise<RedditTrend[]> {
+    try {
+        const res = await fetch(`${API_BASE_URL}/social/trends`);
+        if (!res.ok) return [];
+        return await res.json();
+    } catch (error) {
+        console.error('Error fetching Reddit trends', error);
+        return [];
+    }
+}
+
+export type InsiderTrade = {
+    symbol: string;
+    insider: string;
+    relation: string;
+    trade_type: 'Buy' | 'Sell';
+    price: number;
+    quantity: number;
+    value: string | number;
+    date: string;
+};
+
+export async function fetchInsiderTrades(): Promise<InsiderTrade[]> {
+    try {
+        const res = await fetch(`${API_BASE_URL}/social/insider-trades`);
+        if (!res.ok) return [];
+        return await res.json();
+    } catch (error) {
+        console.error('Error fetching insider trades', error);
+        return [];
+    }
+}

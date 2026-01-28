@@ -18,8 +18,8 @@
 
 ## Phase 3: MVP Offensive Features
 - [x] Momentum scanner implementation
-- [ ] WSB scraper (top mentions, sentiment)
-- [ ] Insider trading tracker (SEC EDGAR)
+- [x] WSB scraper (top mentions, sentiment)
+- [x] Insider trading tracker (OpenInsider Real-Time)
 - [ ] Opportunities dashboard UI
 - [ ] Alert rules for breakouts and trending tickers
 
