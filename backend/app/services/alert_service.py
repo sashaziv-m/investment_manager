@@ -62,5 +62,27 @@ class AlertService:
                     msg = f"[ALERT] VIX is {current_vix} ({rule.operator} {rule.value})"
                     triggered.append(msg)
                     logger.info(msg)
+
+            elif rule.metric == "PRICE" and rule.symbol:
+                try:
+                    # Fetch live price
+                    import yfinance as yf
+                    ticker = yf.Ticker(rule.symbol)
+                    hist = ticker.history(period="1d")
+                    if not hist.empty:
+                        price = hist['Close'].iloc[-1]
+                        
+                        is_triggered = False
+                        if rule.operator == ">" and price > rule.value:
+                            is_triggered = True
+                        elif rule.operator == "<" and price < rule.value:
+                            is_triggered = True
+                            
+                        if is_triggered:
+                            msg = f"[ALERT] {rule.symbol} is ${price:.2f} ({rule.operator} {rule.value})"
+                            triggered.append(msg)
+                            logger.info(msg)
+                except Exception as e:
+                    logger.error(f"Error checking price alert for {rule.symbol}: {e}")
                     
         return triggered

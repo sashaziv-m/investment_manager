@@ -33,6 +33,7 @@ export default function MomentumTable() {
                             <th className="px-6 py-3 font-medium">Price</th>
                             <th className="px-6 py-3 font-medium">RSI (14)</th>
                             <th className="px-6 py-3 font-medium">Mom (20d)</th>
+                            <th className="px-6 py-3 font-medium">Patterns</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100 dark:divide-neutral-700">
@@ -41,12 +42,24 @@ export default function MomentumTable() {
                                 <td className="px-6 py-3 font-medium text-neutral-900 dark:text-white">{item.symbol}</td>
                                 <td className="px-6 py-3 text-neutral-600 dark:text-neutral-400">${item.price}</td>
                                 <td className={`px-6 py-3 font-medium ${item.rsi_14 > 70 ? 'text-red-500' :
-                                        item.rsi_14 < 30 ? 'text-green-500' : 'text-neutral-600'
+                                    item.rsi_14 < 30 ? 'text-green-500' : 'text-neutral-600'
                                     }`}>
                                     {item.rsi_14}
                                 </td>
                                 <td className={`px-6 py-3 font-medium ${item.momentum_score > 0 ? 'text-green-500' : 'text-red-500'}`}>
                                     {item.momentum_score}%
+                                </td>
+                                <td className="px-6 py-3">
+                                    {item.golden_cross && (
+                                        <span className="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20 dark:bg-yellow-900/30 dark:text-yellow-500">
+                                            Golden Cross
+                                        </span>
+                                    )}
+                                    {item.death_cross && (
+                                        <span className="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 dark:bg-gray-400/10 dark:text-gray-400">
+                                            Death Cross
+                                        </span>
+                                    )}
                                 </td>
                             </tr>
                         ))}
@@ -60,6 +73,6 @@ export default function MomentumTable() {
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div >
     );
 }

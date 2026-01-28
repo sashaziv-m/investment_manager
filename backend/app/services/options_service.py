@@ -62,3 +62,40 @@ class OptionsService:
         # Sort by Volume desc
         activity.sort(key=lambda x: x['volume'], reverse=True)
         return activity[:20]
+
+    async def get_market_sentiment(self):
+        """
+        Calculates Put/Call Ratio for SPY and QQQ.
+        High Ratio (> 1.0) = Bearish/Hedging
+        Low Ratio (< 0.7) = Bullish
+        """
+        sentiment = []
+        for ticker in ["SPY", "QQQ"]:
+            try:
+                stock = yf.Ticker(ticker)
+                expirations = stock.options
+                if not expirations:
+                    continue
+                
+                # Aggregate volume for near-term expiration
+                chain = stock.option_chain(expirations[0])
+                
+                total_call_vol = chain.calls['volume'].sum()
+                total_put_vol = chain.puts['volume'].sum()
+                
+                pc_ratio = round(total_put_vol / (total_call_vol or 1), 2)
+                
+                signal = "Neutral"
+                if pc_ratio > 1.0: signal = "Bearish (High Puts)"
+                elif pc_ratio < 0.7: signal = "Bullish (High Calls)"
+                
+                sentiment.append({
+                    "symbol": ticker,
+                    "pc_ratio": pc_ratio,
+                    "signal": signal,
+                    "total_volume": int(total_call_vol + total_put_vol)
+                })
+            except Exception as e:
+                logger.error(f"Error fetching sentiment for {ticker}: {e}")
+                
+        return sentiment

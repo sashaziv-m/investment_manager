@@ -54,6 +54,7 @@ export default function AlertConfig() {
                         >
                             <option value="VIX">VIX</option>
                             <option value="RSI">RSI (SPY)</option>
+                            <option value="PRICE">Price Target</option>
                         </select>
                         <select
                             className="p-2 border rounded"
@@ -70,6 +71,15 @@ export default function AlertConfig() {
                             onChange={e => setNewRule({ ...newRule, value: parseFloat(e.target.value) })}
                         />
                     </div>
+                    {newRule.metric === 'PRICE' && (
+                        <input
+                            type="text"
+                            className="w-full p-2 border rounded uppercase"
+                            placeholder="Symbol (e.g. NVDA)"
+                            value={newRule.symbol || ''}
+                            onChange={e => setNewRule({ ...newRule, symbol: e.target.value.toUpperCase() })}
+                        />
+                    )}
                     <input
                         type="email"
                         className="w-full p-2 border rounded"

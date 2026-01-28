@@ -66,6 +66,8 @@ export type ScanResult = {
     sma_50: number;
     sma_200: number;
     momentum_score: number;
+    golden_cross?: boolean;
+    death_cross?: boolean;
 };
 
 export async function runScan(): Promise<ScanResult[]> {
@@ -188,6 +190,60 @@ export async function fetchUnusualOptions(): Promise<OptionFlow[]> {
         return await res.json();
     } catch (error) {
         console.error('Error fetching options', error);
+        return [];
+    }
+}
+
+export type MacroData = {
+    symbol: string;
+    name: string;
+    price: number;
+    change: number;
+};
+
+export async function fetchMacroData(): Promise<MacroData[]> {
+    try {
+        const res = await fetch(`${API_BASE_URL}/market/macro`);
+        if (!res.ok) return [];
+        return await res.json();
+    } catch (error) {
+        console.error('Error fetching macro data', error);
+        return [];
+    }
+}
+
+export type SectorData = {
+    symbol: string;
+    name: string;
+    price: number;
+    change: number;
+};
+
+export async function fetchSectorPerformance(): Promise<SectorData[]> {
+    try {
+        const res = await fetch(`${API_BASE_URL}/market/sectors`);
+        if (!res.ok) return [];
+        return await res.json();
+    } catch (error) {
+        console.error('Error fetching sector data', error);
+        return [];
+    }
+}
+
+export type OptionSentiment = {
+    symbol: string;
+    pc_ratio: number;
+    signal: string;
+    total_volume: number;
+};
+
+export async function fetchOptionSentiment(): Promise<OptionSentiment[]> {
+    try {
+        const res = await fetch(`${API_BASE_URL}/options/sentiment`);
+        if (!res.ok) return [];
+        return await res.json();
+    } catch (error) {
+        console.error('Error fetching sentiment', error);
         return [];
     }
 }

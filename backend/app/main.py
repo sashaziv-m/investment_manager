@@ -104,6 +104,21 @@ options_service = OptionsService()
 async def get_unusual_options():
     return await options_service.get_unusual_activity()
 
+@app.get("/api/v1/options/sentiment")
+async def get_sentiment():
+    return await options_service.get_market_sentiment()
+
+# Macro & Sectors
+market_data_service = MarketDataService()
+
+@app.get("/api/v1/market/macro")
+async def get_macro():
+    return await market_data_service.get_macro_data()
+
+@app.get("/api/v1/market/sectors")
+async def get_sectors():
+    return await market_data_service.get_sector_performance()
+
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
 @app.get("/")

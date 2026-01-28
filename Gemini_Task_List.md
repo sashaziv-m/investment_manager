@@ -24,12 +24,12 @@
 - [x] Alert rules for breakouts and trending tickers
 
 ## Phase 4: Enhanced Analytics
-- [ ] Advanced options flow detection
-- [ ] Macro indicator integration
-- [ ] Historical data visualization
-- [ ] Alert rule customization
-- [ ] Sector rotation analysis
-- [ ] Pattern recognition basics
+- [x] Advanced options flow detection
+- [x] Macro indicator integration
+- [x] Historical data visualization (Sector Charts)
+- [x] Alert rule customization
+- [x] Sector rotation analysis
+- [x] Pattern recognition basics
 
 ## Phase 5: Polish & Testing
 - [ ] UI/UX improvements
