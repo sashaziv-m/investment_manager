@@ -5,8 +5,10 @@ import { fetchVixData, VixData, fetchHoldings, Holding } from '@/app/lib/api';
 import VixCard from '@/app/components/VixCard';
 import PortfolioTable from '@/app/components/PortfolioTable';
 import AlertConfig from '@/app/components/AlertConfig';
+import MomentumTable from '@/app/components/MomentumTable';
 
 export default function Home() {
+  // ...
   const [vixData, setVixData] = useState<VixData | null>(null);
   const [holdings, setHoldings] = useState<Holding[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -54,10 +56,7 @@ export default function Home() {
         {/* Offense Column */}
         <div className="space-y-6">
           <h2 className="text-xl font-semibold text-neutral-700 dark:text-neutral-200 border-b pb-2">Offense</h2>
-          <div className="p-6 rounded-xl bg-white dark:bg-neutral-800 shadow-sm opacity-60">
-            <h3 className="text-sm font-medium mb-2">Momentum Scanner</h3>
-            <p className="text-xs text-neutral-500">Coming soon...</p>
-          </div>
+          <MomentumTable />
         </div>
 
         {/* Social Column */}

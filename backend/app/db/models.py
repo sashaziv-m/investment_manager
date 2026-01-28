@@ -5,6 +5,7 @@ from app.db.database import Base
 
 class Stock(Base):
     __tablename__ = "stocks"
+    __table_args__ = {'extend_existing': True}
 
     id = Column(Integer, primary_key=True, index=True)
     symbol = Column(String, unique=True, index=True)
@@ -18,9 +19,16 @@ class Stock(Base):
 
 class MomentumData(Base):
     __tablename__ = "momentum_data"
+    __table_args__ = {'extend_existing': True}
 
     id = Column(Integer, primary_key=True, index=True)
-    stock_id = Column(Integer, ForeignKey("stocks.id"))
+    stock_id = Column(Integer, ForeignKey("stocks.id"), nullable=True) # Check if we enforce FK or just symbol logic for momentum
+    # MVP: MarketDataService likely just stores by symbol or we link to stock if we have it. 
+    # For now, let's keep it simple. The original plan implies linking.
+    # But wait, MarketDataService in MVP fetches from YFinance and returns dict? 
+    # The models previously defined 'symbol' column directly. Let's support both or just symbol.
+    symbol = Column(String, index=True) 
+    
     date = Column(DateTime(timezone=True), server_default=func.now())
     price = Column(Float)
     change_1d = Column(Float)
@@ -29,10 +37,17 @@ class MomentumData(Base):
     rsi_14 = Column(Float)
     volume = Column(Float)
     
+    # New fields from recent addition
+    sma_50 = Column(Float)
+    sma_200 = Column(Float)
+    momentum_score = Column(Float) 
+    timestamp = Column(DateTime(timezone=True), server_default=func.now())
+    
     stock = relationship("Stock", back_populates="momentums")
 
 class RedditMention(Base):
     __tablename__ = "reddit_mentions"
+    __table_args__ = {'extend_existing': True}
 
     id = Column(Integer, primary_key=True, index=True)
     stock_id = Column(Integer, ForeignKey("stocks.id"))
@@ -45,6 +60,7 @@ class RedditMention(Base):
 
 class InsiderTrade(Base):
     __tablename__ = "insider_trades"
+    __table_args__ = {'extend_existing': True}
 
     id = Column(Integer, primary_key=True, index=True)
     stock_id = Column(Integer, ForeignKey("stocks.id"))
@@ -59,6 +75,7 @@ class InsiderTrade(Base):
 
 class Holding(Base):
     __tablename__ = "holdings"
+    __table_args__ = {'extend_existing': True}
 
     id = Column(Integer, primary_key=True, index=True)
     symbol = Column(String, index=True)
@@ -70,6 +87,7 @@ class Holding(Base):
 
 class AlertRule(Base):
     __tablename__ = "alert_rules"
+    __table_args__ = {'extend_existing': True}
 
     id = Column(Integer, primary_key=True, index=True)
     metric = Column(String) # e.g. "VIX", "AAPL_PRICE"
@@ -80,6 +98,7 @@ class AlertRule(Base):
 
 class AlertLog(Base):
     __tablename__ = "alert_logs"
+    __table_args__ = {'extend_existing': True}
 
     id = Column(Integer, primary_key=True, index=True)
     rule_id = Column(Integer, ForeignKey("alert_rules.id"))

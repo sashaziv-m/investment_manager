@@ -58,3 +58,27 @@ export async function addHolding(symbol: string, quantity: number, price: number
         return false;
     }
 }
+
+export type ScanResult = {
+    symbol: string;
+    price: number;
+    rsi_14: number;
+    sma_50: number;
+    sma_200: number;
+    momentum_score: number;
+};
+
+export async function runScan(): Promise<ScanResult[]> {
+    try {
+        const res = await fetch(`${API_BASE_URL}/scanner/run`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({}) // Use defaults
+        });
+        if (!res.ok) return [];
+        return await res.json();
+    } catch (error) {
+        console.error('Error running scan', error);
+        return [];
+    }
+}

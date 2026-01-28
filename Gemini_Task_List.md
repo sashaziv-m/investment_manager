@@ -17,7 +17,7 @@
 - [ ] Options flow basics
 
 ## Phase 3: MVP Offensive Features
-- [ ] Momentum scanner implementation
+- [x] Momentum scanner implementation
 - [ ] WSB scraper (top mentions, sentiment)
 - [ ] Insider trading tracker (SEC EDGAR)
 - [ ] Opportunities dashboard UI

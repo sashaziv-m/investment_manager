@@ -7,6 +7,10 @@ from app.services.portfolio_service import PortfolioService
 from app.db.database import get_db
 from app import schemas
 
+from app.services.market_data_service import MarketDataService
+from typing import List
+from pydantic import BaseModel
+
 app = FastAPI(title=settings.PROJECT_NAME)
 
 # Set all CORS enabled origins
@@ -41,6 +45,21 @@ async def get_holdings(db: AsyncSession = Depends(get_db)):
 async def add_holding(holding: schemas.HoldingCreate, db: AsyncSession = Depends(get_db)):
     service = PortfolioService(db)
     return await service.add_holding(holding)
+
+# Scanner Endpoints
+class ScanRequest(BaseModel):
+    symbols: List[str] = ["AAPL", "MSFT", "NVDA", "TSLA", "AMD", "GOOGL", "AMZN", "META"]
+
+@api_router.post("/scanner/run", tags=["scanner"])
+async def run_scan(request: ScanRequest):
+    results = []
+    for symbol in request.symbols:
+        data = MarketDataService.calculate_momentum(symbol)
+        if data:
+            results.append(data)
+    # Sort by momentum score descending
+    results.sort(key=lambda x: x['momentum_score'], reverse=True)
+    return results
 
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
