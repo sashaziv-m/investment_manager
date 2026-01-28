@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { fetchVixData, VixData, fetchHoldings, Holding } from '@/app/lib/api';
 import VixCard from '@/app/components/VixCard';
 import PortfolioTable from '@/app/components/PortfolioTable';
+import AlertConfig from '@/app/components/AlertConfig';
 
 export default function Home() {
   const [vixData, setVixData] = useState<VixData | null>(null);
@@ -43,6 +44,10 @@ export default function Home() {
           <div className="opacity-100">
             <h3 className="text-sm font-medium mb-2 text-neutral-600 dark:text-neutral-400">Portfolio Holdings</h3>
             <PortfolioTable holdings={holdings} isLoading={isLoading} />
+          </div>
+
+          <div className="opacity-100">
+            <AlertConfig />
           </div>
         </div>
 

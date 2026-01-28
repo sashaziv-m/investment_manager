@@ -67,3 +67,23 @@ class Holding(Base):
     avg_price = Column(Float)
     current_price = Column(Float, nullable=True)
     asset_type = Column(String, default="Stock") # Stock, Option, etc.
+
+class AlertRule(Base):
+    __tablename__ = "alert_rules"
+
+    id = Column(Integer, primary_key=True, index=True)
+    metric = Column(String) # e.g. "VIX", "AAPL_PRICE"
+    operator = Column(String) # ">", "<", ">=", "<="
+    value = Column(Float)
+    contact_info = Column(String) # email or phone
+    is_active = Column(Boolean, default=True)
+
+class AlertLog(Base):
+    __tablename__ = "alert_logs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    rule_id = Column(Integer, ForeignKey("alert_rules.id"))
+    message = Column(String)
+    timestamp = Column(DateTime(timezone=True), server_default=func.now())
+    
+    rule = relationship("AlertRule")
