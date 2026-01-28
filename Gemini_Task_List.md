@@ -14,14 +14,14 @@
 - [x] Portfolio tracking
 - [x] Basic dashboard UI
 - [x] Alert system implementation
-- [ ] Options flow basics
+- [x] Options flow basics
 
 ## Phase 3: MVP Offensive Features
 - [x] Momentum scanner implementation
 - [x] WSB scraper (top mentions, sentiment)
 - [x] Insider trading tracker (OpenInsider Real-Time)
-- [ ] Opportunities dashboard UI
-- [ ] Alert rules for breakouts and trending tickers
+- [x] Opportunities dashboard UI
+- [x] Alert rules for breakouts and trending tickers
 
 ## Phase 4: Enhanced Analytics
 - [ ] Advanced options flow detection

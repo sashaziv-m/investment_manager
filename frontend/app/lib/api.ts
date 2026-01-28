@@ -121,3 +121,73 @@ export async function fetchInsiderTrades(): Promise<InsiderTrade[]> {
         return [];
     }
 }
+
+export type AlertRule = {
+    id: number;
+    metric: string;
+    symbol?: string;
+    operator: string;
+    value: number;
+    contact: string;
+    active: boolean;
+};
+
+export async function fetchAlerts(): Promise<AlertRule[]> {
+    try {
+        const res = await fetch(`${API_BASE_URL}/alerts`);
+        if (!res.ok) return [];
+        return await res.json();
+    } catch (error) {
+        console.error('Error fetching alerts', error);
+        return [];
+    }
+}
+
+export async function createAlert(rule: Omit<AlertRule, 'id'>): Promise<AlertRule | null> {
+    try {
+        const res = await fetch(`${API_BASE_URL}/alerts`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ...rule, id: 0 }) // ID handled by backend
+        });
+        if (!res.ok) return null;
+        return await res.json();
+    } catch (error) {
+        console.error('Error creating alert', error);
+        return null;
+    }
+}
+
+export async function deleteAlert(id: number): Promise<boolean> {
+    try {
+        const res = await fetch(`${API_BASE_URL}/alerts/${id}`, {
+            method: 'DELETE'
+        });
+        return res.ok;
+    } catch (error) {
+        console.error('Error deleting alert', error);
+        return false;
+    }
+}
+
+export type OptionFlow = {
+    symbol: string;
+    type: 'Call' | 'Put';
+    strike: number;
+    expiration: string;
+    volume: number;
+    open_interest: number;
+    vol_oi_ratio: number;
+    last_price: number;
+};
+
+export async function fetchUnusualOptions(): Promise<OptionFlow[]> {
+    try {
+        const res = await fetch(`${API_BASE_URL}/options/unusual`);
+        if (!res.ok) return [];
+        return await res.json();
+    } catch (error) {
+        console.error('Error fetching options', error);
+        return [];
+    }
+}

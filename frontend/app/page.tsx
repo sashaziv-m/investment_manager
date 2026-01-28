@@ -8,6 +8,8 @@ import AlertConfig from '@/app/components/AlertConfig';
 import MomentumTable from '@/app/components/MomentumTable';
 import RedditTrends from '@/app/components/RedditTrends';
 import InsiderTrades from '@/app/components/InsiderTrades';
+import Opportunities from '@/app/components/Opportunities';
+import OptionsFlow from '@/app/components/OptionsFlow';
 
 export default function Home() {
   // ...
@@ -39,6 +41,8 @@ export default function Home() {
         </div>
       </div>
 
+      <Opportunities />
+
       <div className="grid w-full max-w-5xl gap-6 lg:grid-cols-3">
         {/* Defense Column */}
         <div className="space-y-6">
@@ -53,6 +57,8 @@ export default function Home() {
           <div className="opacity-100">
             <AlertConfig />
           </div>
+
+          <OptionsFlow />
         </div>
 
         {/* Offense Column */}

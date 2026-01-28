@@ -8,6 +8,8 @@ from app.db.database import get_db
 from app import schemas
 
 from app.services.market_data_service import MarketDataService
+from app.services.alert_service import AlertService, AlertRule
+from app.services.options_service import OptionsService
 from typing import List
 from pydantic import BaseModel
 
@@ -72,6 +74,35 @@ async def get_insider_trades():
     from app.services.insider_service import InsiderTradeService
     service = InsiderTradeService()
     return await service.get_recent_trades()
+
+# Alerts
+alert_service = AlertService() # Initialize AlertService globally or pass as dependency
+
+@app.get("/api/v1/alerts")
+async def get_alerts():
+    return alert_service.get_rules()
+
+@app.post("/api/v1/alerts")
+async def create_alert(rule: AlertRule):
+    return alert_service.add_rule(rule)
+
+@app.delete("/api/v1/alerts/{rule_id}")
+async def delete_alert(rule_id: int):
+    success = alert_service.delete_rule(rule_id)
+    return {"success": success}
+
+# Background check (simple endpoint for MVP trigger)
+@app.post("/api/v1/alerts/check")
+async def check_alerts():
+    triggered = await alert_service.check_alerts()
+    return {"triggered": triggered}
+
+# Options Flow
+options_service = OptionsService()
+
+@app.get("/api/v1/options/unusual")
+async def get_unusual_options():
+    return await options_service.get_unusual_activity()
 
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
