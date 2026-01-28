@@ -15,11 +15,14 @@ export default function VixCard({ data, isLoading }: Props) {
         );
     }
 
-    if (!data) {
+    if (!data || typeof data.price !== 'number') {
         return (
             <div className="rounded-xl border border-red-200 bg-red-50 p-6 shadow-sm dark:border-red-900 dark:bg-red-900/20">
                 <h3 className="text-lg font-medium text-red-800 dark:text-red-200">VIX Unavailable</h3>
-                <p className="text-sm text-red-600 dark:text-red-300">Could not fetch data</p>
+                <p className="text-sm text-red-600 dark:text-red-300">
+                    {/* @ts-ignore - handling error response that matches VixData on explicit check */}
+                    {(data as any)?.error || "Could not fetch data"}
+                </p>
             </div>
         );
     }

@@ -7,7 +7,20 @@ This guide provides instructions on how to run the application and manually veri
 - **Docker** and **Docker Compose** installed.
 - **Node.js** (v18+) and **npm** installed.
 
-## 1. Starting the Application
+## 1. Quick Start (Recommended)
+
+Run the automated bringup script to start everything at once:
+
+```bash
+./start.sh
+```
+
+This will:
+1.  Start Docker containers (Backend, DB, Redis).
+2.  Install frontend dependencies (if missing).
+3.  Launch the Next.js frontend dev server.
+
+## 2. Manual Startup (Alternative)
 
 ### Backend & Infrastructure
 Start the backend, database (PostgreSQL), Redis, and Celery worker:
