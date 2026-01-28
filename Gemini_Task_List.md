@@ -4,15 +4,15 @@
 - [x] Set up development environment (Python, Node.js, PostgreSQL)
 - [x] Database schema design (add tables for momentum, reddit mentions, insider trades)
 - [x] API structure with FastAPI
-- [ ] Basic frontend scaffolding (Next.js, Tailwind)
+- [x] Basic frontend scaffolding (Next.js, Tailwind)
 - [x] Data fetching pipeline for VIX and portfolio prices
-- [ ] Reddit API setup (PRAW credentials)
-- [ ] Yahoo Finance/Alpha Vantage setup for momentum scanning
+- [x] Reddit API setup (PRAW credentials)
+- [x] Yahoo Finance/Alpha Vantage setup for momentum scanning
 
 ## Phase 2: MVP Defensive Features
-- [ ] VIX monitoring and alerts
-- [ ] Portfolio tracking
-- [ ] Basic dashboard UI
+- [x] VIX monitoring and alerts
+- [x] Portfolio tracking
+- [x] Basic dashboard UI
 - [ ] Alert system implementation
 - [ ] Options flow basics
 

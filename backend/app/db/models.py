@@ -56,3 +56,14 @@ class InsiderTrade(Base):
     value = Column(Float)
     
     stock = relationship("Stock", back_populates="insider_trades")
+
+class Holding(Base):
+    __tablename__ = "holdings"
+
+    id = Column(Integer, primary_key=True, index=True)
+    symbol = Column(String, index=True)
+    name = Column(String)
+    quantity = Column(Float)
+    avg_price = Column(Float)
+    current_price = Column(Float, nullable=True)
+    asset_type = Column(String, default="Stock") # Stock, Option, etc.
